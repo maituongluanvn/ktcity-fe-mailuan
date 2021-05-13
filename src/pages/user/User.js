@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Table, Tag, Space } from 'antd';
-
+import { api } from 'Axios.js';
 import * as Style from './style';
 
 function User() {
   const [data, setData] = useState([]);
+
+  const getData = useCallback(async () => {
+    const { data, total } = await api.getUsers();
+    setData(data);
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
+
+  console.log(data);
+
   return (
     <>
       <Style.Table dataSource={data} columns={columns} />
