@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
+
 import { api } from 'Axios.js';
 import * as Style from './style';
+import { formatDate } from 'utils/formatDate';
 // import { useForm } from 'react-hook-form';
 
 function User() {
@@ -71,14 +73,16 @@ const columns = [
     key: 'status',
   },
   {
-    title: 'createdAt',
+    title: 'Created at',
     dataIndex: 'createdAt',
     key: 'createdAt',
+    render: item => formatDate(item),
   },
   {
-    title: 'updatedAt',
+    title: 'Updated at',
     dataIndex: 'updatedAt',
     key: 'updatedAt',
+    render: item => formatDate(item),
   },
 ];
 

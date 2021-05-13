@@ -11,7 +11,7 @@ function TableCustom({
   currentPage,
 }) {
   const _handleChangePage = e => {
-    handleChangePage(e);
+    handleChangePage(e - 1);
   };
 
   const pageSize = 5;
@@ -21,10 +21,10 @@ function TableCustom({
       <Table dataSource={dataSource} pagination={false} columns={columns} />
       <Pagination
         onChange={_handleChangePage}
-        defaultCurrent={currentPage + 1}
-        total={total - pageSize}
+        total={total}
         showSizeChanger={false}
         pageSize={pageSize}
+        defaultCurrent={1}
       />
     </>
   );
