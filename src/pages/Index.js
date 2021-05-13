@@ -6,7 +6,8 @@ function Index({ children }) {
   const { Header, Content, Footer } = Layout;
   return (
     <Layout className='layout'>
-      <Content style={{ padding: '0 50px' }}>
+      <Header>Header</Header>
+      <Content style={{ padding: '100px 50px' }}>
         <div className='site-layout-content'>{children}</div>
       </Content>
     </Layout>

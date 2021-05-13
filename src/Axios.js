@@ -37,7 +37,7 @@ function initAxiosInstance() {
 
   const instanceAPI = {
     //
-    getUsers: page => getData(`/user?skip=${page}`),
+    getUsers: (page, status) => getData(`/user?skip=${page}&status=${status}`),
   };
 
   return instanceAPI;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Table from 'antd/lib/table/Table';
-import Pagination from 'antd/lib/pagination';
+import Pagination from './Pagination';
 
 function TableCustom({
   dataSource,
@@ -10,21 +10,16 @@ function TableCustom({
   handleChangePage,
   currentPage,
 }) {
-  const _handleChangePage = e => {
-    handleChangePage(e - 1);
-  };
-
   const pageSize = 5;
 
   return (
     <>
       <Table dataSource={dataSource} pagination={false} columns={columns} />
       <Pagination
-        onChange={_handleChangePage}
         total={total}
-        showSizeChanger={false}
+        currentPage={currentPage}
         pageSize={pageSize}
-        defaultCurrent={1}
+        handleChangePage={handleChangePage}
       />
     </>
   );
