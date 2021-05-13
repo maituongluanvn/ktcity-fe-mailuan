@@ -1,25 +1,40 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Table, Tag, Space } from 'antd';
 import { api } from 'Axios.js';
 import * as Style from './style';
+// import { useForm } from 'react-hook-form';
 
 function User() {
   const [data, setData] = useState([]);
+  const [size, setSize] = useState(5);
+  const [currentPage, setCurrentPage] = useState(0);
+  // const { register, handleSubmit, watch } = useForm();
+  const _getData = useCallback(async () => {
+    try {
+      const { data, total } = await api.getUsers(currentPage);
+      setSize(total);
+      setData(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [currentPage]);
 
-  const getData = useCallback(async () => {
-    const { data, total } = await api.getUsers();
-    setData(data);
-  }, []);
+  const _handleChangePage = newPage => {
+    if (newPage !== currentPage) setCurrentPage(newPage);
+  };
 
   useEffect(() => {
-    getData();
-  }, [getData]);
-
-  console.log(data);
+    _getData();
+  }, [_getData, currentPage]);
 
   return (
     <>
-      <Style.Table dataSource={data} columns={columns} />
+      <Style.Table
+        currentPage={currentPage}
+        handleChangePage={_handleChangePage}
+        dataSource={data}
+        total={size}
+        columns={columns}
+      />
     </>
   );
 }
@@ -27,12 +42,12 @@ function User() {
 const columns = [
   {
     title: 'ID',
-    dataIndex: 'ID',
+    dataIndex: 'id',
     key: 'ID',
   },
   {
     title: 'Email',
-    dataIndex: 'Email',
+    dataIndex: 'email',
     key: 'Email',
   },
   {

@@ -1,48 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Tag, Space } from 'antd';
+import Table from 'antd/lib/table/Table';
+import Pagination from 'antd/lib/pagination';
 
-function TableCustom({ dataSource, columns }) {
-  return <Table dataSource={dataSource} columns={columns} />;
+function TableCustom({
+  dataSource,
+  columns,
+  total,
+  handleChangePage,
+  currentPage,
+}) {
+  const _handleChangePage = e => {
+    handleChangePage(e);
+  };
+
+  const pageSize = 5;
+
+  return (
+    <>
+      <Table dataSource={dataSource} pagination={false} columns={columns} />
+      <Pagination
+        onChange={_handleChangePage}
+        defaultCurrent={currentPage + 1}
+        total={total - pageSize}
+        showSizeChanger={false}
+        pageSize={pageSize}
+      />
+    </>
+  );
 }
 
 TableCustom.propTypes = {
   dataSource: PropTypes.array,
   columns: PropTypes.array,
+  total: PropTypes.number,
+  currentPage: PropTypes.number,
+  handleChangePage: PropTypes.func,
 };
 
 TableCustom.defaultProps = {
-  dataSource: [
-    {
-      key: '1',
-      name: 'Mike',
-      age: 32,
-      address: '10 Downing Street',
-    },
-    {
-      key: '2',
-      name: 'John',
-      age: 42,
-      address: '10 Downing Street',
-    },
-  ],
-  columns: [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-  ],
+  dataSource: [],
 };
 
 export default TableCustom;
