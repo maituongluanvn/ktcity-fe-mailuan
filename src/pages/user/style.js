@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import TableCustom from 'components/Table/Table';
+import InputCustom from 'components/Input/Input';
 
 export const Table = styled(TableCustom)`
   & > textarea {
@@ -12,3 +13,5 @@ export const Table = styled(TableCustom)`
     background-color: red !important;
   }
 `;
+
+export const Input = styled(InputCustom)``;

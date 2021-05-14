@@ -36,8 +36,7 @@ function User() {
   };
 
   const _onClickRow = record => {
-    console.log('asd');
-    navigate('/detail');
+    navigate('/detail', { state: record });
   };
 
   useEffect(() => {
