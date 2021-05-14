@@ -1,20 +1,32 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Switch } from 'antd';
+import { notiSuccess } from 'utils/notification';
 import { useForm } from 'react-hook-form';
 
-import Input from 'antd/lib/input/Input';
+import { api } from 'Axios.js';
 
 import * as Style from './style';
 
 function UserDetail() {
   const { state } = useLocation();
   const { register, watch, setValue } = useForm();
+  console.log(state);
+  const _onSubmit = useCallback(async () => {
+    try {
+      const body = { ...watch(), deleted: watch('deleted') === '0' ? 0 : 1 };
+      const { id } = state;
+      //delete email
+      delete body.email;
+      console.log(body);
 
-  const onSubmit = useCallback(() => {
-    console.log(watch());
-  }, [watch]);
+      await api.updateUser(id, body);
+      notiSuccess();
+    } catch (err) {
+      console.error(err);
+    }
+  }, [state, watch]);
 
   return (
     <>
@@ -29,10 +41,13 @@ function UserDetail() {
               placeholder={item.placeholder}
               defaultValue={state?.[item?.dataIndex] || ''}
               dataIndex={item.dataIndex}
+              disable={item.disable}
+              type={item.type}
             />
           </Col>
         ))}
-        <Button onClick={onSubmit} type='primary'>
+
+        <Button onClick={_onSubmit} type='primary'>
           Save
         </Button>
       </Row>
@@ -52,6 +67,7 @@ const fields = [
     name: 'email',
     dataIndex: 'email',
     placeholder: 'Email',
+    disable: true,
   },
   {
     label: 'Username',
@@ -64,6 +80,12 @@ const fields = [
     name: 'fullName',
     dataIndex: 'fullName',
     placeholder: 'Full name',
+  },
+  {
+    label: 'Deleted',
+    name: 'deleted',
+    dataIndex: 'deleted',
+    type: 'switch',
   },
 ];
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'antd/lib/input/Input';
+import Switch from 'antd/lib/switch';
 
 function InputCustom({
   dataIndex,
@@ -11,10 +12,18 @@ function InputCustom({
   setValue,
   // value,
   watch,
+  disable,
+  type,
 }) {
   const _handleChange = e => {
     e.persist();
     setValue(dataIndex, e?.target?.value || null);
+  };
+
+  const _onChangeSwitch = checked => {
+    console.log(checked);
+    const isTrue = checked ? 1 : 0;
+    setValue(dataIndex, isTrue);
   };
 
   useEffect(() => {
@@ -24,15 +33,26 @@ function InputCustom({
   return (
     <>
       <span>{label} : </span>
-      <Input
-        {...register(dataIndex)}
-        name={dataIndex}
-        defaultValue={defaultValue}
-        value={watch(dataIndex)}
-        style={style}
-        placeholder={placeholder}
-        onChange={_handleChange}
-      />
+      {type === 'input' ? (
+        <Input
+          {...register(dataIndex)}
+          name={dataIndex}
+          defaultValue={defaultValue}
+          value={watch(dataIndex)}
+          style={style}
+          placeholder={placeholder}
+          onChange={_handleChange}
+          disabled={disable}
+        />
+      ) : (
+        <Switch
+          {...register(dataIndex)}
+          name={dataIndex}
+          defaultChecked={defaultValue}
+          onChange={_onChangeSwitch}
+          value={watch(dataIndex)}
+        />
+      )}
     </>
   );
 }
@@ -42,6 +62,8 @@ InputCustom.propTypes = {
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,
   dataIndex: PropTypes.string,
+  type: PropTypes.string,
+  disable: PropTypes.bool,
   register: PropTypes.any,
   value: PropTypes.any,
   setValue: PropTypes.any,
@@ -52,6 +74,8 @@ InputCustom.defaultProps = {
   label: '',
   placeholder: '',
   defaultValue: '',
+  disable: false,
+  type: 'input',
 };
 
 const style = {
