@@ -9,12 +9,26 @@ function TableCustom({
   total,
   handleChangePage,
   currentPage,
+  onRowClick,
 }) {
   const pageSize = 5;
 
   return (
     <>
-      <Table dataSource={dataSource} pagination={false} columns={columns} />
+      <Table
+        dataSource={dataSource}
+        pagination={false}
+        columns={columns}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: event => {
+              console.log(event);
+              console.log(rowIndex);
+              console.log(record);
+            },
+          };
+        }}
+      />
       <Pagination
         total={total}
         currentPage={currentPage}
@@ -31,10 +45,12 @@ TableCustom.propTypes = {
   total: PropTypes.number,
   currentPage: PropTypes.number,
   handleChangePage: PropTypes.func,
+  onRowClick: PropTypes.func,
 };
 
 TableCustom.defaultProps = {
   dataSource: [],
+  onRowClick: () => {},
 };
 
 export default TableCustom;

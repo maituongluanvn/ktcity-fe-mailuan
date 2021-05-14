@@ -1,5 +1,6 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { api } from 'Axios.js';
 import * as Style from './style';
@@ -13,6 +14,7 @@ function User() {
   const [size, setSize] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
   const [status, setStatus] = useState(0);
+  const navigate = useNavigate();
   // const { register, handleSubmit, watch } = useForm();
   const _getData = useCallback(async () => {
     try {
@@ -28,14 +30,18 @@ function User() {
     if (newPage !== currentPage) setCurrentPage(newPage);
   };
 
-  useEffect(() => {
-    _getData();
-  }, [_getData, currentPage]);
-
   const handleChange = value => {
     setStatus(value);
     setCurrentPage(0);
   };
+
+  const _onClickRow = record => {
+    navigate('/user-detail', { state: record });
+  };
+
+  useEffect(() => {
+    _getData();
+  }, [_getData, currentPage]);
 
   return (
     <>
@@ -51,6 +57,7 @@ function User() {
         dataSource={data}
         total={size}
         columns={columns}
+        onRowClick={_onClickRow}
       />
     </>
   );
