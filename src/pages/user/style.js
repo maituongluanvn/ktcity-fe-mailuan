@@ -6,4 +6,9 @@ export const Table = styled(TableCustom)`
     height: 150px !important;
     margin-bottom: 20px;
   }
+
+  .ant-table-row {
+    cursor: pointer !important;
+    background-color: red !important;
+  }
 `;

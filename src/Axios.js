@@ -20,16 +20,19 @@ function initAxiosInstance() {
     return data;
   };
 
+  // eslint-disable-next-line no-unused-vars
   const putData = async (url, body = {}, config = {}) => {
     const { data } = await axiosInstance.put(url, body, config);
     return data;
   };
 
+  // eslint-disable-next-line no-unused-vars
   const postData = async (url, body = {}, config = {}) => {
     const { data } = await axiosInstance.post(url, body, config);
     return data;
   };
 
+  // eslint-disable-next-line no-unused-vars
   const deleteData = async (url, body = {}, config = {}) => {
     const { data } = await axiosInstance.delete(url, { data: body }, config);
     return data;

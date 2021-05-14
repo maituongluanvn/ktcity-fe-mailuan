@@ -9,11 +9,11 @@ const Index = lazy(() => import('pages/Index'));
 function App() {
   const routes = useRoutes(Routes);
   return (
-    <div>
-      <Suspense fallback={<></>}>
-        <Index>{routes}</Index>
-      </Suspense>
-    </div>
+    // <div>
+    <Suspense fallback={<>Loading..</>}>
+      <Index>{routes}</Index>
+    </Suspense>
+    /* </div> */
   );
 }
 

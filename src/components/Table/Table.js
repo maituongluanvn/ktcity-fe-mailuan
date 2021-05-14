@@ -16,16 +16,13 @@ function TableCustom({
   return (
     <>
       <Table
+        style={styled}
         dataSource={dataSource}
         pagination={false}
         columns={columns}
-        onRow={(record, rowIndex) => {
+        onRow={record => {
           return {
-            onClick: event => {
-              console.log(event);
-              console.log(rowIndex);
-              console.log(record);
-            },
+            onClick: () => onRowClick(record),
           };
         }}
       />
@@ -51,6 +48,10 @@ TableCustom.propTypes = {
 TableCustom.defaultProps = {
   dataSource: [],
   onRowClick: () => {},
+};
+
+const styled = {
+  cursor: 'pointer',
 };
 
 export default TableCustom;
