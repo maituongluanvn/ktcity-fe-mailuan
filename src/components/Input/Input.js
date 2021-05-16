@@ -14,6 +14,7 @@ function InputCustom({
   watch,
   disable,
   type,
+  required,
 }) {
   const _handleChange = e => {
     e.persist();
@@ -21,13 +22,12 @@ function InputCustom({
   };
 
   const _onChangeSwitch = checked => {
-    console.log(checked);
     const isTrue = checked ? 1 : 0;
     setValue(dataIndex, isTrue);
   };
 
   useEffect(() => {
-    setValue(dataIndex, defaultValue);
+    setValue(dataIndex, defaultValue || null);
   }, [dataIndex, defaultValue, register, setValue]);
 
   return (
@@ -68,6 +68,7 @@ InputCustom.propTypes = {
   value: PropTypes.any,
   setValue: PropTypes.any,
   watch: PropTypes.any,
+  required: PropTypes.bool,
 };
 
 InputCustom.defaultProps = {
@@ -75,6 +76,7 @@ InputCustom.defaultProps = {
   placeholder: '',
   defaultValue: '',
   disable: false,
+  required: false,
   type: 'input',
 };
 

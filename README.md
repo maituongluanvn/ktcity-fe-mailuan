@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+### Cách start Front End và Back end
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Front end :
 
-## Available Scripts
+1. yarn
+2. yarn start
 
-In the project directory, you can run:
+- Backend :
 
-### `yarn start`
+1. yarn
+2. yarn start
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Note:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Backend chạy ở port 8000 và Frontend chạy ở port 3000
+- Hiện tại em đang dùng node phiên bản 14.15.3
+- Anh cài dùm em package nodemon để start backend nhé.
+- Em dùng yarn, nếu dùng npm thì câu lệnh tương tự yarn thôi nha anh :D
+- Nếu có vấn đề gì khác thì anh gọi em sđt: 0796 360 798 ( zalo và telegram số này luôn ).
 
-### `yarn test`
+### Task
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [x] Sử dụng NodeJs để code các API
+- [x] Điểm cộng nếu dùng Expressjs hoặc NestJS để xây dựng ứng dụng ở Backend
+- [x] Điểm cộng nếu dùng Prisma để connect tới Database
+- [] Điểm cộng nếu dùng NextJS kết hợp với Redux Saga để xây dựng ứng dụng ở Frontend
+- [x] Điểm cộng nếu dùng Styled Components
 
-### `yarn build`
+### Task 1: Xây dựng trang tạo user với các thông tin sau
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [x] email: input email
+- [x] username: input text
+- [x] fullname: input text
+- [x] avatar: input file
+- [x] status: select box dropdown do giới hạn thời gian nên em làm status là toggle
+- [x] deleted: toogle box (boolean)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Task 2: Xây dựng trang quản lý user
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [x] Mỗi trang sẽ có 5 user
+- [x] Có phân trang
+- [x] View list dưới dạng table
+- [x] Có filter theo status
 
-### `yarn eject`
+### Task 3: Xây dựng trang cập nhật user
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- [x] Lấy thông tin user theo Id **_do số lượng field nên em truyền data của user detail vào bằng props luôn cho nhanh :d, chứ không làm api riêng_**
+- [x] Cập nhật các thông tin có sẵn
+- [x] Hiển thị email nhưng không cho cập nhật
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Task nâng cao
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [x] Validate email **_Em chỉ validate được email ở database, không đủ thời gian để làm ở BE_**
+- [x] Generate username từ fullname (Frontend & Backend nếu không tồn tại)
+- [] Mỗi row trên table có Toogle box để cập nhật field "deleted" **_Em chưa hiểu task này, tại sao lại làm deleted ở đang list, em có làm toggle "deleted" ở trang detail_**
+- [x] Thêm filter theo ngày tháng tạo user dựa trên "createdAt"
+- [] Authentication dựa trên header với Token Bearer: Authorization: Bearer **_Em thấy các task này cần phải làm log in với username và password, em đã từng làm với JWT, không đủ thời gian nên em
+  không làm task này._**
+- [] Ngăn chặn các tấn công từ bên ngoài (ddos) **_Em nghĩ ddos phải chặn ở tầng server hoặc network_**
+- [x] Ngăn chặn các tấn công từ bên ngoài (xss)
+- [x] Ngăn chặn các tấn công từ bên ngoài (sql injection)
+- [x] Em có bổ sung chặn CORS

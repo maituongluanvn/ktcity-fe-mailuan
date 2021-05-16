@@ -20,13 +20,11 @@ function initAxiosInstance() {
     return data;
   };
 
-  // eslint-disable-next-line no-unused-vars
   const putData = async (url, body = {}) => {
     const { data } = await axiosInstance.put(url, body);
     return data;
   };
 
-  // eslint-disable-next-line no-unused-vars
   const postData = async (url, body = {}, config = {}) => {
     const { data } = await axiosInstance.post(url, body, config);
     return data;
@@ -43,6 +41,7 @@ function initAxiosInstance() {
     getUsers: (page, status, createdAt) =>
       getData(`/user?skip=${page}&status=${status}&createdAt=${createdAt}`),
     updateUser: (id, body) => putData(`/user/${id}`, body),
+    createUser: body => postData(`/user`, body),
   };
 
   return instanceAPI;

@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'antd';
 
 import { api } from 'Axios.js';
 import * as Style from './style';
@@ -49,19 +50,24 @@ function User() {
     navigate('/detail', { state: record });
   };
 
+  const _onClickSave = () => {
+    navigate('/create');
+  };
+
   useEffect(() => {
     _getData();
   }, [_getData, currentPage]);
 
   return (
     <>
+      {/* filter status */}
       <span>Filter status : </span>
       <Select defaultValue={0} style={{ width: 120 }} onChange={handleChange}>
         <Option value='0'>0</Option>
         <Option value='1'>1</Option>
-        <Option value='2'>2</Option>
       </Select>
-      <span>Filter create at : </span>
+      {/* filter created at  */}
+      <span>Filter created at : </span>
       <Select
         defaultValue={'Newest'}
         style={{ width: 120 }}
@@ -70,6 +76,10 @@ function User() {
         <Option value='desc'>Newest</Option>
         <Option value='asc'>Lastest</Option>
       </Select>
+      {/* button create */}
+      <Button onClick={_onClickSave} type='primary'>
+        Create new
+      </Button>
       <Style.Table
         currentPage={currentPage}
         handleChangePage={_handleChangePage}

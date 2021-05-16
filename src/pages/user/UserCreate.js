@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
-import { Row, Col, Button, Switch } from 'antd';
-import { notiSuccess } from 'utils/notification';
+import { Row, Col, Button } from 'antd';
+import { notiCreateSuccess, notiError } from 'utils/notification';
 import { useForm } from 'react-hook-form';
 
 import { api } from 'Axios.js';
@@ -13,24 +13,46 @@ function UserDetail() {
   const { state } = useLocation();
   const { register, watch, setValue } = useForm();
 
-  const _onSubmit = useCallback(async () => {
-    try {
-      const body = {
-        ...watch(),
-        deleted: watch('deleted') === '0' || !watch('deleted') ? 0 : 1,
-        status: watch('status') === '0' || !watch('status') ? 0 : 1,
-      };
-      const { id } = state;
-      //delete email
-      delete body.email;
-      console.log(body);
+  const _handleValidate = body => {
+    const { email, fullName } = body;
+    // validate email
+    // require field
+    if (
+      email === null ||
+      fullName === null ||
+      email.trim() === '' ||
+      fullName.trim() === ''
+    ) {
+      notiError('Email or full name is require');
+      return false;
+    }
+    const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!regexEmail.test(email)) {
+      // email is not validate
+      notiError('Email is not validate');
+      return false;
+    }
+    return true;
+  };
 
-      await api.updateUser(id, body);
-      notiSuccess();
+  const _onSubmit = useCallback(async () => {
+    const body = {
+      ...watch(),
+      deleted: watch('deleted') === '0' || !watch('deleted') ? 0 : 1,
+      status: watch('status') === '0' || !watch('status') ? 0 : 1,
+    };
+    const isValidate = _handleValidate(body);
+    if (!isValidate) {
+      return;
+    }
+    try {
+      await api.createUser(body);
+      notiCreateSuccess();
     } catch (err) {
+      notiError('Something wrong !!');
       console.error(err);
     }
-  }, [state, watch]);
+  }, [watch]);
 
   return (
     <>
@@ -47,6 +69,7 @@ function UserDetail() {
               dataIndex={item.dataIndex}
               disable={item.disable}
               type={item.type}
+              require={item.require}
             />
           </Col>
         ))}
@@ -71,7 +94,7 @@ const fields = [
     name: 'email',
     dataIndex: 'email',
     placeholder: 'Email',
-    disable: true,
+    require: true,
   },
   {
     label: 'Username',
@@ -84,17 +107,12 @@ const fields = [
     name: 'fullName',
     dataIndex: 'fullName',
     placeholder: 'Full name',
+    require: true,
   },
   {
     label: 'Status',
     name: 'status',
     dataIndex: 'status',
-    type: 'switch',
-  },
-  {
-    label: 'Deleted',
-    name: 'deleted',
-    dataIndex: 'deleted',
     type: 'switch',
   },
 ];
