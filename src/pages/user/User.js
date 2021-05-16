@@ -14,17 +14,22 @@ function User() {
   const [size, setSize] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
   const [status, setStatus] = useState(0);
+  const [createdAt, setCreatedAt] = useState('desc');
   const navigate = useNavigate();
   // const { register, handleSubmit, watch } = useForm();
   const _getData = useCallback(async () => {
     try {
-      const { data, total } = await api.getUsers(currentPage, status);
+      const { data, total } = await api.getUsers(
+        currentPage,
+        status,
+        createdAt,
+      );
       setSize(total);
       setData(data);
     } catch (err) {
       console.error(err);
     }
-  }, [currentPage, status]);
+  }, [currentPage, status, createdAt]);
 
   const _handleChangePage = newPage => {
     if (newPage !== currentPage) setCurrentPage(newPage);
@@ -32,6 +37,11 @@ function User() {
 
   const handleChange = value => {
     setStatus(value);
+    setCurrentPage(0);
+  };
+
+  const handleChangeCreateAt = value => {
+    setCreatedAt(value);
     setCurrentPage(0);
   };
 
@@ -50,6 +60,15 @@ function User() {
         <Option value='0'>0</Option>
         <Option value='1'>1</Option>
         <Option value='2'>2</Option>
+      </Select>
+      <span>Filter create at : </span>
+      <Select
+        defaultValue={'Newest'}
+        style={{ width: 120 }}
+        onChange={handleChangeCreateAt}
+      >
+        <Option value='desc'>Newest</Option>
+        <Option value='asc'>Lastest</Option>
       </Select>
       <Style.Table
         currentPage={currentPage}

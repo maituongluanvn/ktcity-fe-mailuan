@@ -40,7 +40,8 @@ function initAxiosInstance() {
 
   const instanceAPI = {
     // users
-    getUsers: (page, status) => getData(`/user?skip=${page}&status=${status}`),
+    getUsers: (page, status, createdAt) =>
+      getData(`/user?skip=${page}&status=${status}&createdAt=${createdAt}`),
     updateUser: (id, body) => putData(`/user/${id}`, body),
   };
 

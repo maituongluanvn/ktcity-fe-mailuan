@@ -12,7 +12,7 @@ import * as Style from './style';
 function UserDetail() {
   const { state } = useLocation();
   const { register, watch, setValue } = useForm();
-  console.log(state);
+
   const _onSubmit = useCallback(async () => {
     try {
       const body = { ...watch(), deleted: watch('deleted') === '0' ? 0 : 1 };
